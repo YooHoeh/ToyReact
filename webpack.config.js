@@ -3,7 +3,7 @@
  * @Description:
  * @Author:
  * @LastEditors: YooHoeh
- * @LastEditTime: 2020-07-20 21:57:45
+ * @LastEditTime: 2020-07-21 09:58:20
  */
 var path = require("path");
 module.exports = {
@@ -16,6 +16,7 @@ module.exports = {
         rules: [
             {
                 test: /\.js?$/i,
+                exclude: /(node_modules|bower_components)/,
                 use: [
                     {
                         loader: "babel-loader",
@@ -37,4 +38,5 @@ module.exports = {
         ],
     },
     mode: "development",
+    optimization: { minimize: false },
 };

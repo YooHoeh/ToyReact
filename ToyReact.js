@@ -3,7 +3,7 @@
  * @Description:
  * @Author:
  * @LastEditors: YooHoeh
- * @LastEditTime: 2020-07-20 22:10:19
+ * @LastEditTime: 2020-07-21 10:05:39
  */
 
 class ElementWrapper {
@@ -28,20 +28,31 @@ class TextWrapper {
         this.root.setAttribute(name, value);
     }
 
-    mountTo(parent) {}
+    mountTo(parent) {
+        parent.appendChild(this.root);
+      }
 }
 export class Component {
+    constructor() {
+        this.children = [];
+    }
+
     setAttribute(name, value) {
         this[name] = value;
     }
+
     mountTo(parent) {
         let vdom = this.render();
         vdom.mountTo(parent);
     }
+
+    appendChild(vchild) {
+        this.children.push(vchild);
+    }
 }
-export let ToyReact = {
+export const ToyReact = {
     createElement(type, attrs, ...children) {
-        let ele = document.createElement(type);
+        let ele;
         if (typeof type === "string") {
             ele = new ElementWrapper(type);
         } else {
