@@ -1,11 +1,16 @@
 /*
  * @Date: 2020-07-20 21:15:34
- * @Description:
- * @Author:
+ * @Description: 简易实现React
+ * @Author: yoohoeh
  * @LastEditors: YooHoeh
- * @LastEditTime: 2020-07-21 11:36:13
+ * @LastEditTime: 2020-07-21 11:43:52
  */
 
+/**
+ * 生成组件
+ * @param type element类型
+ * @returns JSX 虚拟组件
+ */
 class ElementWrapper {
     constructor(type) {
         this.root = document.createElement(type);
@@ -20,6 +25,12 @@ class ElementWrapper {
         parent.appendChild(this.root);
     }
 }
+
+/**
+ * 生成文本组件
+ * @param content 文本内容
+ * @returns 文本节点
+ */
 class TextWrapper {
     constructor(content) {
         this.root = document.createTextNode(content);
@@ -33,6 +44,10 @@ class TextWrapper {
         parent.appendChild(this.root);
     }
 }
+
+/**
+ * 抽象出来的组件类
+ */
 export class Component {
     constructor() {
         this.children = [];
@@ -52,10 +67,15 @@ export class Component {
         this.children.push(vchild);
     }
 }
+
+/**
+ * ToyReact类核心
+ */
 export const ToyReact = {
+    // 生成element
     createElement(type, attrs, ...children) {
         let ele;
-        console.warn("children",type,attrs,children,arguments)
+        console.warn("children", type, attrs, children, arguments);
         if (typeof type === "string") {
             ele = new ElementWrapper(type);
         } else {
@@ -92,6 +112,8 @@ export const ToyReact = {
         console.warn("Toy", ele);
         return ele;
     },
+
+    // 渲染
     render(vdom, ele) {
         console.warn("render", vdom, ele);
         vdom.mountTo(ele);
