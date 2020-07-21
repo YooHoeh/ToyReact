@@ -3,7 +3,7 @@
  * @Description:
  * @Author:
  * @LastEditors: YooHoeh
- * @LastEditTime: 2020-07-21 10:05:39
+ * @LastEditTime: 2020-07-21 11:36:13
  */
 
 class ElementWrapper {
@@ -29,8 +29,9 @@ class TextWrapper {
     }
 
     mountTo(parent) {
+        console.warn("textWrapper", this.root);
         parent.appendChild(this.root);
-      }
+    }
 }
 export class Component {
     constructor() {
@@ -43,6 +44,7 @@ export class Component {
 
     mountTo(parent) {
         let vdom = this.render();
+        console.warn("Comp", vdom, parent);
         vdom.mountTo(parent);
     }
 
@@ -53,6 +55,7 @@ export class Component {
 export const ToyReact = {
     createElement(type, attrs, ...children) {
         let ele;
+        console.warn("children",type,attrs,children,arguments)
         if (typeof type === "string") {
             ele = new ElementWrapper(type);
         } else {
@@ -62,7 +65,8 @@ export const ToyReact = {
             ele.setAttribute(name, attrs[name]);
         }
         const insertChild = (children) => {
-            for (let child in children) {
+            for (let child of children) {
+                console.warn("type", typeof child, child);
                 if (typeof child === "object" && child instanceof Array) {
                     insertChild(children);
                 } else {
@@ -85,9 +89,11 @@ export const ToyReact = {
             }
         };
         insertChild(children);
+        console.warn("Toy", ele);
         return ele;
     },
     render(vdom, ele) {
+        console.warn("render", vdom, ele);
         vdom.mountTo(ele);
     },
 };
